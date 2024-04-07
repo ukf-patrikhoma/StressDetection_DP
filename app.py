@@ -13,6 +13,7 @@ model.eval()
 def index():
     if request.method == 'POST':
         user_input = request.form['user_input']
+        inputs = tokenizer(user_input, return_tensors="pt", truncation=True, padding=True, max_length=128)
         with torch.no_grad():
             outputs = model(**inputs)
         prediction = torch.argmax(outputs.logits, dim=-1).item()
